@@ -1,0 +1,8 @@
+com/techpro/project/service/Servicepeople.class
+com/techpro/project/entity/People$PeopleBuilder.class
+com/techpro/project/repository/PeopleRepository.class
+com/techpro/project/configuration/DockerSecretsProcessor.class
+com/techpro/project/controllers/PeopleController.class
+com/techpro/project/service/ServicepeopleImpl.class
+com/techpro/project/entity/People.class
+com/techpro/project/Application.class

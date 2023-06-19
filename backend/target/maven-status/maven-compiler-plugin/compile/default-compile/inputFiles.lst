@@ -1,0 +1,7 @@
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/Application.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/controllers/PeopleController.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/service/Servicepeople.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/service/ServicepeopleImpl.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/configuration/DockerSecretsProcessor.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/repository/PeopleRepository.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/entity/People.java
