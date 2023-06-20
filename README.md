@@ -8,3 +8,6 @@ Both scripts can be started by typing the command `go.sh` and `./stop.sh`
 Executing go.sh rebuilds the code, rebuilds and starts the containers and prunes unused docker resources.
 
 Executing stop.sh brings the containers down
+
+The swagger ui can be accessed at `{virtualmachineIP:8090/techpro-final.html}`
+or if the port 8090 has been forwarded :`http://localhost:8090/techpro-final.html`
