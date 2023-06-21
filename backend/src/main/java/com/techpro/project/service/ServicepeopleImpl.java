@@ -1,30 +1,30 @@
-package com.techpro.project.service;
+// package com.techpro.project.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Component;
 
-import com.techpro.project.entity.People;
-import com.techpro.project.repository.PeopleRepository;
+// import com.techpro.project.model.Person;
+// import com.techpro.project.repository.PersonRepository;
 
-@Component
-public class ServicepeopleImpl implements Servicepeople {
+// @Component
+// public class ServicepeopleImpl implements Servicepeople {
 
-    @Autowired
-    private PeopleRepository peopleRepository;
+//     @Autowired
+//     private PersonRepository peopleRepository;
 
-    @Override
-    public People savePeople(People people) {
+//     @Override
+//     public Person savePeople(Person people) {
         
-        return peopleRepository.save(people);
-    }
+//         return peopleRepository.save(people);
+//     }
 
-    @Override
-    public People readPeople(int id) {
-        return null;
+//     @Override
+//     public Person readPeople(int id) {
+//         return null;
         
         
-    }
+//     }
 
 
     
-}
+// }
