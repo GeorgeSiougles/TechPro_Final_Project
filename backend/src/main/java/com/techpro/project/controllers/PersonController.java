@@ -17,7 +17,7 @@ import com.techpro.project.repository.PersonRepository;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-@CrossOrigin("*") //CrossOrigin("http://localhost:3000") didnt work
+@CrossOrigin("*")
 @RestController
 public class PersonController {
     @Autowired
