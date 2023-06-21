@@ -15,7 +15,7 @@ import com.techpro.project.entity.Person;
 import com.techpro.project.exception.PersonNotFoundException;
 import com.techpro.project.repository.PersonRepository;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @CrossOrigin("*") //CrossOrigin("http://localhost:3000") didnt work
 @RestController
@@ -24,8 +24,8 @@ public class PersonController {
     private PersonRepository personRepository;
 
     @PostMapping("/person")
-    Person newPerson(@RequestBody Person newPesron){
-        return personRepository.save(newPesron);
+    Person newPerson(@RequestBody Person newPerson){
+        return personRepository.save(newPerson);
     }
 
     @GetMapping("/allPeople")

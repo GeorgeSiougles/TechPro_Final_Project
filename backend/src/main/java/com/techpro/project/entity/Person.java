@@ -13,24 +13,23 @@ import javax.persistence.GenerationType;
 
 @Getter
 @Setter
-@Entity
-
 
 @Table(name = "person")
+@Entity
 public class Person {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
-    private int PersonID;
+    private int id;
 
     @Column(name = "firstName")
-    private String FirstName;
+    private String firstName;
 
     @Column(name = "lastName" )
-    private String LastName;
+    private String lastName;
 
     @Column(name = "email" )
-    private String Email;
+    private String email;
 
 }
