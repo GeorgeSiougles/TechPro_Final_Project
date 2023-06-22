@@ -19,7 +19,7 @@ export default function EditItem() {
   };
 
   useEffect(() => {
-    loadPerson();
+    loadItem();
   }, []);
 
   const sumbitHandler = async (event) => {
@@ -28,15 +28,15 @@ export default function EditItem() {
     navigate("/");
   };
 
-  const loadPerson = async () => {
-    const result = await axios.get(`http://localhost:8090/person/${id}`);
-    setPerson(result.data);
+  const loadItem = async () => {
+    const result = await axios.get(`http://localhost:8090/item/${id}`);
+    setItem(result.data);
   };
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4">Edit Person</h2>
+          <h2 className="text-center m-4">Edit Item</h2>
           <form onSubmit={sumbitHandler}>
             <div className="mb-3">
               <label htmlFor="Name" className="form-label">
