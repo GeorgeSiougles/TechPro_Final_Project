@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techpro.project.entity.Item;
@@ -46,5 +47,13 @@ public class ItemController {
         }
         itemRepository.deleteById(id);
         return "Item with id " + id + " has been deleted successfully";
+    }
+
+    @PutMapping("/item/{id}")
+    Item updateItem(@RequestBody Item newItem,@PathVariable Integer id){
+        return itemRepository.findById(id).map( item -> {
+            item.setName(newItem.getName());
+            return itemRepository.save(item);
+        }).orElseThrow(()->new ItemNotFoundException(id));
     }
 }

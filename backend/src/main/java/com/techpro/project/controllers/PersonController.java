@@ -38,6 +38,16 @@ public class PersonController {
         return personRepository.findById(id).orElseThrow(()-> new PersonNotFoundException(id));
     }
 
+    @DeleteMapping("/person/{id}")
+    String deletePerson(@PathVariable Integer id)
+    {
+        if(!personRepository.existsById(id)){
+            throw new PersonNotFoundException(id);
+        }
+        personRepository.deleteById(id);
+        return "Person with id " + id + " has been deleted successfully";
+    }
+
     @PutMapping("/person/{id}")
     Person updatePerson(@RequestBody Person newPerson,@PathVariable Integer id){
         return personRepository.findById(id).map( person -> {
@@ -48,14 +58,6 @@ public class PersonController {
         }).orElseThrow(()->new PersonNotFoundException(id));
     }
 
-    @DeleteMapping("/person/{id}")
-    String deletePerson(@PathVariable Integer id)
-    {
-        if(!personRepository.existsById(id)){
-            throw new PersonNotFoundException(id);
-        }
-        personRepository.deleteById(id);
-        return "Person with id " + id + " has been deleted successfully";
-    }
+
 
 }
