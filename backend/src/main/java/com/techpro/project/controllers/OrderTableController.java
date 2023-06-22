@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -44,4 +45,12 @@ public class OrderTableController {
       orderTableRepository.deleteById(id);
       return "OrderTable with id: " + id + " has been deleted successfully";
     }
+
+   @PutMapping("/orderTable/{id}")
+   OrderTable updateOrderTable(@RequestBody OrderTable newOrderTable,@PathVariable Integer id){
+      return orderTableRepository.findById(id).map(order -> {
+         order.setOrderDate(newOrderTable.getOrderDate());
+         return orderTableRepository.save(order);
+      }).orElseThrow(()->new OrderTableNotFoundException(id));
+   }
 }
