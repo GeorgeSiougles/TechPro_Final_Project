@@ -4,17 +4,17 @@ import Navbar from "./layout/Navbar";
 import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import AddItem from "./components/item/AddItem";
-import EditItem from "./components/item/EditItem";
-import ViewItem from "./components/item/ViewItem";
+import AddItem from "./components/items/AddItem";
+import EditItem from "./components/items/EditItem";
+import ViewItem from "./components/items/ViewItem";
 
 import AddPerson from "./components/people/AddPerson";
 import EditPerson from "./components/people/EditPerson";
 import ViewPerson from "./components/people/ViewPerson";
 
-import AddOrder from "./components/item/AddOrder";
-import EditOrder from "./components/item/EditOrder";
-import ViewOrder from "./components/item/ViewOrder";
+import AddOrder from "./components/orders/AddOrder";
+import EditOrder from "./components/orders/EditOrder";
+import ViewOrder from "./components/orders/ViewOrder";
 
 function App() {
   return (
