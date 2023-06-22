@@ -24,11 +24,11 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/addItem" element={<AddItem />} />
-          <Route exact path="/item/:id" element={<EditItem />} />
-          <Route exact path="/item/:id" element={<ViewItem />} />
+          <Route exact path="/editItem/:id" element={<EditItem />} />
+          <Route exact path="/viewItem/:id" element={<ViewItem />} />
           <Route exact path="/saveOrderDetails" element={<AddOrder />} />
-          <Route exact path="/orderDetails/:id" element={<EditOrder />} />
-          <Route exact path="/orderDetails/:id" element={<ViewOrder />} />
+          <Route exact path="/editOrder/:id" element={<EditOrder />} />
+          <Route exact path="/viewOrder/:id" element={<ViewOrder />} />
           <Route exact path="/addperson" element={<AddPerson />} />
           <Route exact path="/editperson/:id" element={<EditPerson />} />
           <Route exact path="/viewperson/:id" element={<ViewPerson />} />
