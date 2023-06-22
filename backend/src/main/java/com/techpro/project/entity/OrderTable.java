@@ -17,14 +17,12 @@ import javax.transaction.Transactional;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Data
 @Transactional
-@NoArgsConstructor
 
 @Table(name = "orderTable")
 @Entity
@@ -34,14 +32,11 @@ public class OrderTable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "personId")
-    private int personId;
-
     @Column(name = "orderDate")
     private LocalDateTime orderDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn( name = "fk_id")
-    private OrderDetails orderDetails;
+    // @OneToOne(cascade = CascadeType.ALL)
+    // @JoinColumn( name = "personId", referencedColumnName = "id")
+    // private Person person;
 
 }
