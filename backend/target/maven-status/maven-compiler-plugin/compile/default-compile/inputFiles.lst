@@ -2,8 +2,11 @@
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/Application.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/service/Servicepeople.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/entity/Person.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/entity/OrderDetails.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/service/ServicepeopleImpl.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/entity/OrderTable.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/configuration/DockerSecretsProcessor.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/controllers/PersonController.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/exception/PersonNotFoundException.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/repository/PersonRepository.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/entity/Item.java

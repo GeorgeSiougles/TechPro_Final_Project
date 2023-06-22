@@ -3,33 +3,33 @@
 
 -- DROP TABLE IF EXISTS `person`;
 -- CREATE TABLE person (
---   `PersonID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
---   `FirstName` VARCHAR(255) NOT NULL DEFAULT '',
---   `LastName` VARCHAR(255) NOT NULL DEFAULT '' ,
---   `Email` VARCHAR(255) NOT NULL DEFAULT '' 
+--   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+--   `firstName` VARCHAR(255) NOT NULL DEFAULT '',
+--   `lastName` VARCHAR(255) NOT NULL DEFAULT '' ,
+--   `email` VARCHAR(255) NOT NULL DEFAULT '' 
 -- );
 
 -- DROP TABLE IF EXISTS `item`;
 -- CREATE TABLE item (
---   `ItemID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 --   `Name` VARCHAR(255) NOT NULL DEFAULT ''
 -- );
 
--- DROP TABLE IF EXISTS `order`;
--- CREATE TABLE order (
---   `OrderID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
---   `PersonID` INT UNSIGNED NOT NULL,
---   `OrderDate` DATETIME  ,
---   FOREIGN KEY (PersonID) REFERENCES people (PersonID)
+-- DROP TABLE IF EXISTS `orderTable`;
+-- CREATE TABLE orderTable (
+--   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--   `personId` INT UNSIGNED NOT NULL,
+--   `orderDate` DATETIME DEFAULT CURRENT_TIMESTAMP,
+--   FOREIGN KEY (personId) REFERENCES person (id) on delete cascade
 -- );
 
--- DROP TABLE IF EXISTS `order_details`;
--- CREATE TABLE order_details (
---   `OrderDetailsID` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
---   `OrderID` INT UNSIGNED NOT NULL ,
---   `ItemID` INT UNSIGNED NOT NULL ,
---   `Quantity` INT NOT NULL DEFAULT 0,
---   FOREIGN KEY (OrderID) REFERENCES orders (OrderID),
---   FOREIGN KEY (ItemID) REFERENCES items (ItemID)
+-- DROP TABLE IF EXISTS `orderDetails`;
+-- CREATE TABLE orderDetails (
+--   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--   `orderId` INT UNSIGNED NOT NULL ,
+--   `itemId` INT UNSIGNED NOT NULL ,
+--   `quantity` INT NOT NULL DEFAULT 0,
+--   FOREIGN KEY (orderId) REFERENCES `order` (id) on delete cascade,
+--   FOREIGN KEY (itemId) REFERENCES item (id) on delete cascade
 -- );
 
