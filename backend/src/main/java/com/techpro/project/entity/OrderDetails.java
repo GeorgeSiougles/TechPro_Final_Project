@@ -25,19 +25,19 @@ import lombok.Setter;
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "orderDetailsId")
+    private int orderDetailsId;
     
     @Column(name = "quantity")
     private int quantity;
 
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn( name = "fk_item_id")
-    // private Item item;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn( name = "itemId")
+    private Item item;
     
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn( name = "fk_orderTable_id")
-    // private OrderTable orderTable;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn( name = "orderTableId")
+    private OrderTable orderTable;
     
     
 }

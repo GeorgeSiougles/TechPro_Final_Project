@@ -29,14 +29,14 @@ import lombok.Setter;
 public class OrderTable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "orderTableId")
+    private int orderTableId;
 
     @Column(name = "orderDate")
     private LocalDateTime orderDate;
 
-    // @OneToOne(cascade = CascadeType.ALL)
-    // @JoinColumn( name = "personId", referencedColumnName = "id")
-    // private Person person;
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn( name = "personId")
+    private Person person;
 
 }
