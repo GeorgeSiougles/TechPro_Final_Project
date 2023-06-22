@@ -20,6 +20,12 @@ export default function Navbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+          <Link className="btn btn-outline-light" to="/addorder">
+            New Order
+          </Link>
+          <Link className="btn btn-outline-light" to="/additem">
+            New Item
+          </Link>
           <Link className="btn btn-outline-light" to="/addperson">
             Add Person
           </Link>
