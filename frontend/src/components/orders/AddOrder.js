@@ -12,6 +12,8 @@ export default function AddOrder() {
   const [arePeopleLoaded, setArePeopleLoaded] = useState(false);
   const [areItemsLoaded, setAreItemsLoaded] = useState(false);
 
+  const [latestOrderId, setLatestOrderId] = useState();
+
   useEffect(
     () => {
       loadPeople();
@@ -42,8 +44,44 @@ export default function AddOrder() {
     setArePeopleLoaded(people.length !== 0);
   };
 
-  const orderSubmitHandler = () => {
-    let bodyData = {};
+  const createOrderTable = async () => {
+    await axios.post("http://localhost:8090/saveOrderTable", {
+      orderDate: new Date().toISOString(),
+      person: {
+        personId: selectedPerson.personId,
+        firstName: selectedPerson.firstName,
+        lastName: selectedPerson.lastName,
+        email: selectedPerson.email,
+      },
+    });
+  };
+
+  const getLatestOrderId = async () => {
+    const response = await axios.get("http://localhost:8090/latestOrderId");
+    setLatestOrderId(response.data);
+  };
+
+  const createOrder = async () => {
+    await axios.post("http://localhost:8090/saveOrderDetails", {
+      quantity: 10,
+      item: {
+        itemId: selectedItem.itemId,
+        name: selectedItem.name,
+      },
+      orderTable: {
+        orderTableId: latestOrderId,
+        person: {
+          personId: selectedPerson.personId,
+        },
+      },
+    });
+  };
+  const orderSubmitHandler = async (event) => {
+    event.preventDefault();
+
+    createOrderTable();
+    getLatestOrderId();
+    createOrder();
   };
 
   let itemContent = (
