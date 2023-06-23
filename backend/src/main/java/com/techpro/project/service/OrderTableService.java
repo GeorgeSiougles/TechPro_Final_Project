@@ -20,7 +20,7 @@ public class OrderTableService {
     }
 
     public Integer getLatestOrderTableId(){
-        Pageable pageable = PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "id"));
+        Pageable pageable = PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "orderTableId"));
         OrderTable latestOrderTable = orderTableRepository.findAll(pageable).getContent().get(0);
         return latestOrderTable.getOrderTableId();
     }
