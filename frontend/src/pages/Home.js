@@ -202,9 +202,12 @@ export default function Home() {
     <>
       <div className="container">
         <div className="py-4">
-          {arePeopleLoaded ? <p>No people to show.</p> : peopleContent}
-          {areItemsLoaded ? <p>No items to show.</p> : itemsContent}
-          {areOrdersLoaded ? <p>No orders to show.</p> : ordersContent}
+          {arePeopleLoaded && peopleContent}
+          {!arePeopleLoaded && <p>No people to show.</p>}
+          {areItemsLoaded && itemsContent}
+          {!areItemsLoaded && <p>No items to show.</p>}
+          {areOrdersLoaded && ordersContent}
+          {!areOrdersLoaded && <p>No orders to show.</p>}
         </div>
       </div>
     </>
