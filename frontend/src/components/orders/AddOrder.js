@@ -46,6 +46,10 @@ export default function AddOrder() {
     setArePeopleLoaded(people.length !== 0);
   };
 
+  const quantityChangeHandler = (event) => {
+    setQuantity(event.target.value);
+  };
+
   const createOrderTable = async () => {
     await axios.post("http://localhost:8090/saveOrderTable", {
       orderDate: new Date().toISOString(),
@@ -76,7 +80,6 @@ export default function AddOrder() {
           name: selectedItem.name,
         },
         orderTable: {
-          // orderTableId: 1,
           person: {
             personId: selectedPerson.personId,
           },
@@ -191,6 +194,7 @@ export default function AddOrder() {
             defaultValue="1"
             min="1"
             step="1"
+            onChange={quantityChangeHandler}
           />
         </div>
         <button type="submit" className="btn btn-outline-primary">
