@@ -13,12 +13,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.techpro.project.entity.OrderTable;
 import com.techpro.project.exception.OrderTableNotFoundException;
 import com.techpro.project.repository.OrderTableRepository;
+import com.techpro.project.service.OrderTableService;
 
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
 public class OrderTableController {
+
+     private final OrderTableService orderTableService;
+
+     @Autowired
+     public OrderTableController(OrderTableService orderTableService){
+      this.orderTableService=orderTableService;
+     }
 
      @Autowired
      private OrderTableRepository orderTableRepository;
@@ -53,4 +61,9 @@ public class OrderTableController {
          return orderTableRepository.save(order);
       }).orElseThrow(()->new OrderTableNotFoundException(id));
    }
+   @GetMapping("/latestOrderId")
+   public int getLatestOrderTableId(){
+      return orderTableService.getLatestOrderTableId();
+   }
+
 }

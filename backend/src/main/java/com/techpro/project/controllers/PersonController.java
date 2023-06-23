@@ -16,6 +16,7 @@ import com.techpro.project.exception.PersonNotFoundException;
 import com.techpro.project.repository.PersonRepository;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @CrossOrigin("*")
 @RestController
@@ -58,6 +59,14 @@ public class PersonController {
         }).orElseThrow(()->new PersonNotFoundException(id));
     }
 
-
+    @GetMapping("/id")
+    public Integer getPesonByEmail(@RequestParam("email") String email){
+        Person person = personRepository.findByEmail(email);
+        if(person != null){
+            return person.getPersonId();
+        } else {
+            throw new PersonNotFoundException(0);
+        }
+    } 
 
 }
