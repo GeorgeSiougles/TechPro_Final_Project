@@ -26,7 +26,7 @@ function App() {
           <Route exact path="/addItem" element={<AddItem />} />
           <Route exact path="/editItem/:id" element={<EditItem />} />
           <Route exact path="/viewItem/:id" element={<ViewItem />} />
-          <Route exact path="/saveOrderDetails" element={<AddOrder />} />
+          <Route exact path="/addOrder" element={<AddOrder />} />
           <Route exact path="/editOrder/:id" element={<EditOrder />} />
           <Route exact path="/viewOrder/:id" element={<ViewOrder />} />
           <Route exact path="/addperson" element={<AddPerson />} />
