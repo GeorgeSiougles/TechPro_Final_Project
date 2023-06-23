@@ -12,10 +12,9 @@ export default function AddOrder() {
   const [selectedItem, setSelectedItem] = useState([]);
   const [selectedPerson, setSelectedPerson] = useState([]);
 
-  const [arePeopleLoaded, setArePeopleLoaded] = useState(true);
-  const [areItemsLoaded, setAreItemsLoaded] = useState(true);
-
   const [latestOrderId, setLatestOrderId] = useState();
+
+  const [disableSubmit, setDisableSubmit] = useState(true);
 
   useEffect(() => {
     loadPeople();
@@ -28,22 +27,22 @@ export default function AddOrder() {
 
   const selectItem = (item) => {
     setSelectedItem(item);
+    setDisableSubmit(selectedItem.length === 0 || selectedPerson === 0);
   };
 
   const selectPerson = (person) => {
     setSelectedPerson(person);
+    setDisableSubmit(selectedItem.length === 0 || selectedPerson === 0);
   };
 
   const loadItems = async () => {
     const result = await axios.get("http://localhost:8090/getAllItems");
     setItems(result.data);
-    setAreItemsLoaded(items.length !== 0);
   };
 
   const loadPeople = async () => {
     const result = await axios.get("http://localhost:8090/allPeople");
     setPeople(result.data);
-    setArePeopleLoaded(people.length !== 0);
   };
 
   const quantityChangeHandler = (event) => {
@@ -156,56 +155,76 @@ export default function AddOrder() {
       </div>
     </div>
   );
+
+  let formContent = (
+    <form onSubmit={orderSubmitHandler}>
+      <div className="m-1">
+        <label htmlFor="ItemId" className="form-label">
+          Item ID
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          name="ItemId"
+          readOnly={true}
+          value={selectedItem.itemId}
+        />
+      </div>
+      <div className="m-1">
+        <label htmlFor="PersonId" className="form-label">
+          Person ID
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          name="PersonId"
+          readOnly={true}
+          value={selectedPerson.personId}
+        />
+      </div>
+      <div className="m-1">
+        <label htmlFor="Quantity" className="form-label">
+          Quantity
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          name="Quantity"
+          defaultValue="1"
+          min="1"
+          step="1"
+          onChange={quantityChangeHandler}
+        />
+      </div>
+      <button
+        type="submit"
+        className="btn btn-outline-primary"
+        disabled={disableSubmit}
+      >
+        Submit
+      </button>
+      <Link className="btn btn-outline-danger mx-2" to="/">
+        Cancel
+      </Link>
+    </form>
+  );
   return (
     <div className="container">
-      <form onSubmit={orderSubmitHandler}>
-        <div className="m-1">
-          <label htmlFor="ItemId" className="form-label">
-            Item ID
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            name="ItemId"
-            readOnly={true}
-            value={selectedItem.itemId}
-          />
-        </div>
-        <div className="m-1">
-          <label htmlFor="PersonId" className="form-label">
-            Person ID
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            name="PersonId"
-            readOnly={true}
-            value={selectedPerson.personId}
-          />
-        </div>
-        <div className="m-1">
-          <label htmlFor="Quantity" className="form-label">
-            Quantity
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            name="Quantity"
-            defaultValue="1"
-            min="1"
-            step="1"
-            onChange={quantityChangeHandler}
-          />
-        </div>
-        <button type="submit" className="btn btn-outline-primary">
-          Submit
-        </button>
-        <Link className="btn btn-outline-danger mx-2" to="/">
-          Cancel
-        </Link>
-      </form>
-      <div>{itemContent}</div>
-      <div>{peopleContent}</div>
+      {(people.length !== 0 || items.length !== 0) && formContent}
+      <div>
+        {people.length === 0 ? (
+          <p>No items found, please add some</p>
+        ) : (
+          itemContent
+        )}
+      </div>
+      <div>
+        {items.length === 0 ? (
+          <p>No people found, please add some</p>
+        ) : (
+          peopleContent
+        )}
+      </div>
     </div>
   );
 }
