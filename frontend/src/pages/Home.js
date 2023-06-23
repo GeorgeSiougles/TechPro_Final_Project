@@ -7,6 +7,10 @@ export default function Home() {
   const [items, setItems] = useState([]);
   const [orders, setOrders] = useState([]);
 
+  const [arePeopleLoaded, setArePeopleLoaded] = useState(false);
+  const [areItemsLoaded, setAreItemsLoaded] = useState(false);
+  const [areOrdersLoaded, setAreOrdersLoaded] = useState(false);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -18,6 +22,7 @@ export default function Home() {
   const loadPeople = async () => {
     const result = await axios.get("http://localhost:8090/allPeople");
     setPeople(result.data);
+    setArePeopleLoaded(people.length !== 0);
   };
 
   const deletePerson = async (id) => {
@@ -28,6 +33,7 @@ export default function Home() {
   const loadItems = async () => {
     const result = await axios.get("http://localhost:8090/getAllItems");
     setItems(result.data);
+    setAreItemsLoaded(items.length !== 0);
   };
 
   const deleteItem = async (id) => {
@@ -38,12 +44,19 @@ export default function Home() {
   const loadOrders = async () => {
     const result = await axios.get("http://localhost:8090/getAllOrderDetails");
     setOrders(result.data);
+    setAreOrdersLoaded(orders.length !== 0);
   };
 
   const deleteOrder = async (id) => {
     await axios.delete(`http://localhost:8090/orderDetails/${id}`);
     loadOrders();
   };
+
+  let peopleContent = "";
+
+  let itemsContent = "";
+
+  let ordersContent = "";
 
   return (
     <div className="container">
@@ -59,6 +72,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
+            {!arePeopleLoaded && <p>No people to show.</p>}
             {people.map((person, index) => (
               <tr>
                 <th scope="row" key={index}>
@@ -99,6 +113,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
+            {!areItemsLoaded && <p>No items to show.</p>}
             {items.map((item, index) => (
               <tr>
                 <th scope="row" key={index}>
@@ -140,6 +155,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
+            {!areOrdersLoaded && <p>No orders to show.</p>}
             {orders.map((order, index) => (
               <tr>
                 <th scope="row" key={index}>
