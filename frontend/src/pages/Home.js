@@ -52,13 +52,7 @@ export default function Home() {
     loadOrders();
   };
 
-  let peopleContent = "";
-
-  let itemsContent = "";
-
-  let ordersContent = "";
-
-  return (
+  let peopleContent = (
     <div className="container">
       <div className="py-4">
         <table className="table border shadow my-2">
@@ -72,7 +66,6 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {!arePeopleLoaded && <p>No people to show.</p>}
             {people.map((person, index) => (
               <tr>
                 <th scope="row" key={index}>
@@ -105,6 +98,13 @@ export default function Home() {
             ))}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+
+  let itemsContent = (
+    <div className="container">
+      <div className="py-4">
         <table className="table border shadow my-2">
           <thead>
             <tr>
@@ -113,7 +113,6 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {!areItemsLoaded && <p>No items to show.</p>}
             {items.map((item, index) => (
               <tr>
                 <th scope="row" key={index}>
@@ -144,6 +143,13 @@ export default function Home() {
             ))}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+
+  let ordersContent = (
+    <div className="container">
+      <div className="py-4">
         <table className="table border shadow my-2">
           <thead>
             <tr>
@@ -155,7 +161,6 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {!areOrdersLoaded && <p>No orders to show.</p>}
             {orders.map((order, index) => (
               <tr>
                 <th scope="row" key={index}>
@@ -191,5 +196,17 @@ export default function Home() {
         </table>
       </div>
     </div>
+  );
+
+  return (
+    <>
+      <div className="container">
+        <div className="py-4">
+          {arePeopleLoaded ? <p>No people to show.</p> : peopleContent}
+          {areItemsLoaded ? <p>No items to show.</p> : itemsContent}
+          {areOrdersLoaded ? <p>No orders to show.</p> : ordersContent}
+        </div>
+      </div>
+    </>
   );
 }

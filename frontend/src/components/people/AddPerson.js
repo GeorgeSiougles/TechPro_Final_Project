@@ -74,7 +74,7 @@ export default function AddPerson() {
                 Email
               </label>
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 placeholder="Enter email"
                 name="Email"
