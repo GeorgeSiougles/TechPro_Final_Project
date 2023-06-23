@@ -12,8 +12,8 @@ export default function AddOrder() {
   const [selectedItem, setSelectedItem] = useState([]);
   const [selectedPerson, setSelectedPerson] = useState([]);
 
-  const [arePeopleLoaded, setArePeopleLoaded] = useState(false);
-  const [areItemsLoaded, setAreItemsLoaded] = useState(false);
+  const [arePeopleLoaded, setArePeopleLoaded] = useState(true);
+  const [areItemsLoaded, setAreItemsLoaded] = useState(true);
 
   const [latestOrderId, setLatestOrderId] = useState();
 
@@ -21,6 +21,10 @@ export default function AddOrder() {
     loadPeople();
     loadItems();
   }, []);
+
+  useEffect(() => {
+    createOrder();
+  }, [latestOrderId]);
 
   const selectItem = (item) => {
     setSelectedItem(item);
@@ -56,34 +60,40 @@ export default function AddOrder() {
 
   const getLatestOrderId = async () => {
     const response = await axios.get("http://localhost:8090/latestOrderId");
-    console.log(response.data);
-    setLatestOrderId(response.data);
+    let id = response.data;
+    setLatestOrderId(id);
+    console.log("latestOrderId");
+    console.log(latestOrderId);
   };
 
   const createOrder = async () => {
-    console.log(latestOrderId);
-    await axios.post("http://localhost:8090/saveOrderDetails", {
-      quantity: quantity,
-      item: {
-        itemId: selectedItem.itemId,
-        name: selectedItem.name,
-      },
-      orderTable: {
-        orderTableId: latestOrderId,
-        person: {
-          personId: selectedPerson.personId,
+    if (latestOrderId != null) {
+      console.log(latestOrderId);
+      await axios.post("http://localhost:8090/saveOrderDetails", {
+        quantity: quantity,
+        item: {
+          itemId: selectedItem.itemId,
+          name: selectedItem.name,
         },
-      },
-    });
+        orderTable: {
+          // orderTableId: 1,
+          person: {
+            personId: selectedPerson.personId,
+          },
+          orderTableId: latestOrderId,
+        },
+      });
+      navigate("/");
+    }
   };
   const orderSubmitHandler = async (event) => {
     event.preventDefault();
 
     createOrderTable();
     getLatestOrderId();
-    createOrder();
+    // createOrder();
 
-    navigate("/");
+    // navigate("/");
   };
 
   let itemContent = (

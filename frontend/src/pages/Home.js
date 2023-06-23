@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Home() {
@@ -7,22 +7,25 @@ export default function Home() {
   const [items, setItems] = useState([]);
   const [orders, setOrders] = useState([]);
 
-  const [arePeopleLoaded, setArePeopleLoaded] = useState(false);
-  const [areItemsLoaded, setAreItemsLoaded] = useState(false);
-  const [areOrdersLoaded, setAreOrdersLoaded] = useState(false);
+  const [arePeopleLoaded, setArePeopleLoaded] = useState();
+  const [areItemsLoaded, setAreItemsLoaded] = useState();
+  const [areOrdersLoaded, setAreOrdersLoaded] = useState();
 
-  const { id } = useParams();
+  const [numPeople, setNumPeople] = useState(0);
+  const [numItems, setNumItems] = useState(0);
+  const [numOrders, setNumOrders] = useState(0);
 
   useEffect(() => {
     loadPeople();
     loadItems();
     loadOrders();
-  }, []);
+  }, [numPeople, numItems, numOrders]);
 
   const loadPeople = async () => {
     const result = await axios.get("http://localhost:8090/allPeople");
     setPeople(result.data);
-    setArePeopleLoaded(people.length !== 0);
+    setNumPeople(people.length);
+    setArePeopleLoaded(numPeople !== 0);
   };
 
   const deletePerson = async (id) => {
@@ -33,7 +36,8 @@ export default function Home() {
   const loadItems = async () => {
     const result = await axios.get("http://localhost:8090/getAllItems");
     setItems(result.data);
-    setAreItemsLoaded(items.length !== 0);
+    setNumItems(items.length);
+    setAreItemsLoaded(numItems !== 0);
   };
 
   const deleteItem = async (id) => {
@@ -44,7 +48,8 @@ export default function Home() {
   const loadOrders = async () => {
     const result = await axios.get("http://localhost:8090/getAllOrderDetails");
     setOrders(result.data);
-    setAreOrdersLoaded(orders.length !== 0);
+    setNumOrders(orders.length);
+    setAreOrdersLoaded(numOrders !== 0);
   };
 
   const deleteOrder = async (id) => {
@@ -166,7 +171,7 @@ export default function Home() {
                 <th scope="row" key={index}>
                   {index + 1}
                 </th>
-                <td>{order.orderTable.orderDate}</td>
+                <td>{order.orderTable.orderDate.slice(0, 9)}</td>
                 <td>{order.item.name}</td>
                 <td>{order.quantity}</td>
                 <td>{order.orderTable.person.email}</td>
@@ -202,11 +207,11 @@ export default function Home() {
     <>
       <div className="container">
         <div className="py-4">
-          {arePeopleLoaded && peopleContent}
+          {peopleContent}
           {!arePeopleLoaded && <p>No people to show.</p>}
-          {areItemsLoaded && itemsContent}
+          {itemsContent}
           {!areItemsLoaded && <p>No items to show.</p>}
-          {areOrdersLoaded && ordersContent}
+          {ordersContent}
           {!areOrdersLoaded && <p>No orders to show.</p>}
         </div>
       </div>

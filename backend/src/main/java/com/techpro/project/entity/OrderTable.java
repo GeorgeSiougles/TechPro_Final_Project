@@ -1,5 +1,9 @@
 package com.techpro.project.entity;
 
+
+
+import java.time.LocalDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +33,7 @@ public class OrderTable {
     private int orderTableId;
 
     @Column(name = "orderDate")
-    private String orderDate;
+    private LocalDateTime orderDate;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn( name = "personId")
