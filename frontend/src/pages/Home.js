@@ -178,19 +178,19 @@ export default function Home() {
                 <td>
                   <Link
                     className="btn btn-primary mx-2"
-                    to={`/viewOrder/${order.id}`}
+                    to={`/viewOrder/${order.orderDetailsId}`}
                   >
                     View
                   </Link>
                   <Link
                     className="btn btn-outline-primary mx-2"
-                    to={`/editOrder/${order.id}`}
+                    to={`/editOrder/${order.orderDetailsId}`}
                   >
                     Edit
                   </Link>
                   <button
                     className="btn btn-danger mx-2"
-                    onClick={() => deleteOrder(order.id)}
+                    onClick={() => deleteOrder(order.orderDetailsId)}
                   >
                     Delete
                   </button>

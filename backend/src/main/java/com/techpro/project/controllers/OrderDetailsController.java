@@ -35,7 +35,7 @@ public class OrderDetailsController {
         return orderDetailsRepository.findAll();
     }
 
-    @GetMapping("/orderDetalis/{id}")
+    @GetMapping("/orderDetails/{id}")
     OrderDetails getOrderDetailsById(@PathVariable Integer id){
         return orderDetailsRepository.findById(id).orElseThrow(()-> new OrderDetailsNotFoundException(id));
     }
