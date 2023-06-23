@@ -35,7 +35,7 @@ export default function AddItem() {
             <input
               type="text"
               className="form-control"
-              placeholder="Enter first name"
+              placeholder="Enter item name"
               name="ItemName"
               value={itemName}
               onChange={itemChangeHandler}
