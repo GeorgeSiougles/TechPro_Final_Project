@@ -11,9 +11,9 @@ export default function Home() {
   const [areItemsLoaded, setAreItemsLoaded] = useState();
   const [areOrdersLoaded, setAreOrdersLoaded] = useState();
 
-  const [numPeople, setNumPeople] = useState(0);
-  const [numItems, setNumItems] = useState(0);
-  const [numOrders, setNumOrders] = useState(0);
+  const [numPeople, setNumPeople] = useState();
+  const [numItems, setNumItems] = useState();
+  const [numOrders, setNumOrders] = useState();
 
   useEffect(() => {
     loadPeople();
@@ -207,12 +207,9 @@ export default function Home() {
     <>
       <div className="container">
         <div className="py-4">
-          {peopleContent}
-          {!arePeopleLoaded && <p>No people to show.</p>}
-          {itemsContent}
-          {!areItemsLoaded && <p>No items to show.</p>}
-          {ordersContent}
-          {!areOrdersLoaded && <p>No orders to show.</p>}
+          {numPeople === 0 ? <p>No people to show.</p> : peopleContent}
+          {numItems === 0 ? <p>No items to show.</p> : itemsContent}
+          {numOrders === 0 ? <p>No orders to show.</p> : ordersContent}
         </div>
       </div>
     </>
