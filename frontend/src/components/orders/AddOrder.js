@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function AddOrder() {
+  let navigate = useNavigate();
+
   const [people, setPeople] = useState([]);
   const [items, setItems] = useState([]);
+  const [quantity, setQuantity] = useState(1);
 
   const [selectedItem, setSelectedItem] = useState([]);
   const [selectedPerson, setSelectedPerson] = useState([]);
@@ -14,15 +17,10 @@ export default function AddOrder() {
 
   const [latestOrderId, setLatestOrderId] = useState();
 
-  useEffect(
-    () => {
-      loadPeople();
-      loadItems();
-    },
-    people,
-    items,
-    []
-  );
+  useEffect(() => {
+    loadPeople();
+    loadItems();
+  }, []);
 
   const selectItem = (item) => {
     setSelectedItem(item);
@@ -58,12 +56,14 @@ export default function AddOrder() {
 
   const getLatestOrderId = async () => {
     const response = await axios.get("http://localhost:8090/latestOrderId");
+    console.log(response.data);
     setLatestOrderId(response.data);
   };
 
   const createOrder = async () => {
+    console.log(latestOrderId);
     await axios.post("http://localhost:8090/saveOrderDetails", {
-      quantity: 10,
+      quantity: quantity,
       item: {
         itemId: selectedItem.itemId,
         name: selectedItem.name,
@@ -82,6 +82,8 @@ export default function AddOrder() {
     createOrderTable();
     getLatestOrderId();
     createOrder();
+
+    navigate("/");
   };
 
   let itemContent = (
@@ -176,21 +178,12 @@ export default function AddOrder() {
             type="number"
             className="form-control"
             name="Quantity"
-            min="0"
+            defaultValue="1"
+            min="1"
             step="1"
-            // value={lastName}
-            // onChange={lastNameChangeHandler}
           />
         </div>
-        <button
-          type="submit"
-          className={`${
-            !areItemsLoaded || !arePeopleLoaded
-              ? "btn btn-danger"
-              : "btn btn-outline-primary"
-          }`}
-          disabled={!arePeopleLoaded || !areItemsLoaded}
-        >
+        <button type="submit" className="btn btn-outline-primary">
           Submit
         </button>
         <Link className="btn btn-outline-danger mx-2" to="/">

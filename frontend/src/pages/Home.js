@@ -13,17 +13,11 @@ export default function Home() {
 
   const { id } = useParams();
 
-  useEffect(
-    () => {
-      loadPeople();
-      loadItems();
-      loadOrders();
-    },
-    people,
-    items,
-    orders,
-    []
-  );
+  useEffect(() => {
+    loadPeople();
+    loadItems();
+    loadOrders();
+  }, []);
 
   const loadPeople = async () => {
     const result = await axios.get("http://localhost:8090/allPeople");
