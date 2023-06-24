@@ -24,8 +24,17 @@ export default function ViewOrder() {
   }, []);
 
   const loadOrder = async () => {
-    const result = await axios.get(`http://localhost:8090/orderDetails/${id}`);
-    setOrder(result.data);
+    try {
+      const result = await axios.get(
+        `http://localhost:8090/orderDetails/${id}`
+      );
+      setOrder(result.data);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /orderDetails/${id}`);
+      // window.alert(error.message + ` while accessing /orderDetails/${id}`);
+    }
   };
   return (
     <div className="container">

@@ -14,8 +14,14 @@ export default function ViewItem() {
   }, []);
 
   const loadItem = async () => {
-    const result = await axios.get(`http://localhost:8090/item/${id}`);
-    setItem(result.data);
+    try {
+      const result = await axios.get(`http://localhost:8090/item/${id}`);
+      setItem(result.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /item/${id}`);
+      // window.alert(error.message + ` while accessing /item/${id}`);
+    }
   };
   return (
     <div className="container">

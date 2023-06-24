@@ -44,13 +44,25 @@ export default function AddOrder() {
   };
 
   const loadItems = async () => {
-    const result = await axios.get("http://localhost:8090/getAllItems");
-    setItems(result.data);
+    try {
+      const result = await axios.get("http://localhost:8090/getAllItems");
+      setItems(result.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /getAllItems`);
+      // window.alert(error.message + ` while accessing /getAllItems`);
+    }
   };
 
   const loadPeople = async () => {
-    const result = await axios.get("http://localhost:8090/allPeople");
-    setPeople(result.data);
+    try {
+      const result = await axios.get("http://localhost:8090/allPeople");
+      setPeople(result.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /allPeople`);
+      // window.alert(error.message + ` while accessing /allPeople`);
+    }
   };
 
   const quantityChangeHandler = (event) => {
@@ -58,42 +70,60 @@ export default function AddOrder() {
   };
 
   const createOrderTable = async () => {
-    await axios.post("http://localhost:8090/saveOrderTable", {
-      orderDate: new Date().toISOString(),
-      person: {
-        personId: selectedPerson.personId,
-        firstName: selectedPerson.firstName,
-        lastName: selectedPerson.lastName,
-        email: selectedPerson.email,
-      },
-    });
+    try {
+      await axios.post("http://localhost:8090/saveOrderTable", {
+        orderDate: new Date().toISOString(),
+        person: {
+          personId: selectedPerson.personId,
+          firstName: selectedPerson.firstName,
+          lastName: selectedPerson.lastName,
+          email: selectedPerson.email,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /saveOrderTable`);
+      // window.alert(error.message + ` while accessing /saveOrderTable`);
+    }
   };
 
   const getLatestOrderId = async () => {
-    const response = await axios.get("http://localhost:8090/latestOrderId");
-    let id = response.data;
-    setLatestOrderId(id);
-    console.log("latestOrderId");
-    console.log(latestOrderId);
+    try {
+      const response = await axios.get("http://localhost:8090/latestOrderId");
+      let id = response.data;
+      setLatestOrderId(id);
+      console.log("latestOrderId");
+      console.log(latestOrderId);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /latestOrderId`);
+      // window.alert(error.message + ` while accessing /latestOrderId`);
+    }
   };
 
   const createOrder = async () => {
-    if (latestOrderId != null) {
-      console.log(latestOrderId);
-      await axios.post("http://localhost:8090/saveOrderDetails", {
-        quantity: quantity,
-        item: {
-          itemId: selectedItem.itemId,
-          name: selectedItem.name,
-        },
-        orderTable: {
-          person: {
-            personId: selectedPerson.personId,
+    try {
+      if (latestOrderId != null) {
+        console.log(latestOrderId);
+        await axios.post("http://localhost:8090/saveOrderDetails", {
+          quantity: quantity,
+          item: {
+            itemId: selectedItem.itemId,
+            name: selectedItem.name,
           },
-          orderTableId: latestOrderId,
-        },
-      });
-      navigate("/");
+          orderTable: {
+            person: {
+              personId: selectedPerson.personId,
+            },
+            orderTableId: latestOrderId,
+          },
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /saveOrderDetails`);
+      // window.alert(error.message + ` while accessing /saveOrderDetails`);
     }
   };
   const orderSubmitHandler = async (event) => {

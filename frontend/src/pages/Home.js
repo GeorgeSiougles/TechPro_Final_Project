@@ -22,39 +22,77 @@ export default function Home() {
   }, [numPeople, numItems, numOrders]);
 
   const loadPeople = async () => {
-    const result = await axios.get("http://localhost:8090/allPeople");
-    setPeople(result.data);
-    setNumPeople(people.length);
-    setArePeopleLoaded(numPeople !== 0);
+    try {
+      const result = await axios.get("http://localhost:8090/allPeople");
+      setPeople(result.data);
+      setNumPeople(people.length);
+      setArePeopleLoaded(numPeople !== 0);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /allPeople`);
+      // window.alert(error.message + ` while accessing /allPeople`);
+    }
   };
 
   const deletePerson = async (id) => {
-    await axios.delete(`http://localhost:8090/person/${id}`);
-    loadPeople();
+    try {
+      await axios.delete(`http://localhost:8090/person/${id}`);
+      loadPeople();
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /person/${id}`);
+      // window.alert(error.message + ` while accessing /person/${id}`);
+    }
   };
 
   const loadItems = async () => {
-    const result = await axios.get("http://localhost:8090/getAllItems");
-    setItems(result.data);
-    setNumItems(items.length);
-    setAreItemsLoaded(numItems !== 0);
+    try {
+      const result = await axios.get("http://localhost:8090/getAllItems");
+      setItems(result.data);
+      setNumItems(items.length);
+      setAreItemsLoaded(numItems !== 0);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /getAllItems`);
+      // window.alert(error.message + ` while accessing /getAllItems`);
+    }
   };
 
   const deleteItem = async (id) => {
-    await axios.delete(`http://localhost:8090/item/${id}`);
-    loadItems();
+    try {
+      await axios.delete(`http://localhost:8090/item/${id}`);
+      loadItems();
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /item/${id}`);
+      // window.alert(error.message + ` while accessing /item/${id}`);
+    }
   };
 
   const loadOrders = async () => {
-    const result = await axios.get("http://localhost:8090/getAllOrderDetails");
-    setOrders(result.data);
-    setNumOrders(orders.length);
-    setAreOrdersLoaded(numOrders !== 0);
+    try {
+      const result = await axios.get(
+        "http://localhost:8090/getAllOrderDetails"
+      );
+      setOrders(result.data);
+      setNumOrders(orders.length);
+      setAreOrdersLoaded(numOrders !== 0);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /getAllOrderDetails`);
+      // window.alert(error.message + ` while accessing /getAllOrderDetails`);
+    }
   };
 
   const deleteOrder = async (id) => {
-    await axios.delete(`http://localhost:8090/orderDetails/${id}`);
-    loadOrders();
+    try {
+      await axios.delete(`http://localhost:8090/orderDetails/${id}`);
+      loadOrders();
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /orderDetails/${id}`);
+      // window.alert(error.message + ` while accessing /orderDetails/${id}`);
+    }
   };
 
   let peopleContent = (

@@ -27,7 +27,7 @@ export default function AddPerson() {
   }
 
   const checkFormValidation = () => {
-    if (isFirstNameValid && isLastNameValid && isLastNameValid) {
+    if (isFirstNameValid && isLastNameValid && isEmailValid) {
       setDisableSubmit(false);
     } else {
       setDisableSubmit(true);
@@ -67,8 +67,14 @@ export default function AddPerson() {
 
   const sumbitHandler = async (event) => {
     event.preventDefault();
-    const response = await axios.post("http://localhost:8090/person", person);
-    navigate("/");
+    try {
+      const response = await axios.post("http://localhost:8090/person", person);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /person`);
+      // window.alert(error.message + ` while accessing /person`);
+    }
   };
 
   return (

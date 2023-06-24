@@ -16,8 +16,14 @@ export default function ViewPerson() {
   }, []);
 
   const loadPerson = async () => {
-    const result = await axios.get(`http://localhost:8090/person/${id}`);
-    setPerson(result.data);
+    try {
+      const result = await axios.get(`http://localhost:8090/person/${id}`);
+      setPerson(result.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /person/${id}`);
+      // window.alert(error.message + ` while accessing /person/${id}`);
+    }
   };
   return (
     <div className="container">

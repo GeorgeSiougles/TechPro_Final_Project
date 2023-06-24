@@ -32,8 +32,14 @@ export default function AddItem() {
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const response = await axios.post("http://localhost:8090/saveItem", item);
-    navigate("/");
+    try {
+      const response = await axios.post("http://localhost:8090/saveItem", item);
+      navigate("/");
+    } catch {
+      console.log(error);
+      console.log(error.message + ` while accessing /saveItem`);
+      // window.alert(error.message + ` while accessing /item/${id}`);
+    }
   };
 
   return (

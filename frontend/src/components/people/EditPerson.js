@@ -38,16 +38,28 @@ export default function EditPerson() {
 
   const sumbitHandler = async (event) => {
     event.preventDefault();
-    const response = await axios.put(
-      `http://localhost:8090/person/${id}`,
-      person
-    );
-    navigate("/");
+    try {
+      const response = await axios.put(
+        `http://localhost:8090/person/${id}`,
+        person
+      );
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /person/${id}`);
+      // window.alert(error.message + ` while accessing /person/${id}`);
+    }
   };
 
   const loadPerson = async () => {
-    const result = await axios.get(`http://localhost:8090/person/${id}`);
-    setPerson(result.data);
+    try {
+      const result = await axios.get(`http://localhost:8090/person/${id}`);
+      setPerson(result.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /person/${id}`);
+      // window.alert(error.message + ` while accessing /person/${id}`);
+    }
   };
 
   return (

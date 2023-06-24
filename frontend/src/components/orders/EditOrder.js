@@ -52,11 +52,17 @@ export default function EditOrder() {
 
   const sumbitHandler = async (event) => {
     event.preventDefault();
-    const response = await axios.put(
-      `http://localhost:8090/orderDetails/${id}`,
-      order
-    );
-    navigate("/");
+    try {
+      const response = await axios.put(
+        `http://localhost:8090/orderDetails/${id}`,
+        order
+      );
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /orderDetails/${id}`);
+      // window.alert(error.message + ` while accessing /orderDetails/${id}`);
+    }
   };
 
   useEffect(() => {
@@ -64,8 +70,16 @@ export default function EditOrder() {
   }, []);
 
   const loadOrder = async () => {
-    const result = await axios.get(`http://localhost:8090/orderDetails/${id}`);
-    setOrder(result.data);
+    try {
+      const result = await axios.get(
+        `http://localhost:8090/orderDetails/${id}`
+      );
+      setOrder(result.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /orderDetails/${id}`);
+      // window.alert(error.message + ` while accessing /orderDetails/${id}`);
+    }
   };
 
   return (
