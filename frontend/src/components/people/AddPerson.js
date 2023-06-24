@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
@@ -16,6 +16,9 @@ export default function AddPerson() {
 
   const [disableSubmit, setDisableSubmit] = useState(true);
 
+  useEffect(() => {
+    checkFormValidation();
+  }, [isFirstNameValid, isLastNameValid, isEmailValid]);
   const { firstName, lastName, email } = person;
 
   let submitClassName = ``;
@@ -41,6 +44,8 @@ export default function AddPerson() {
     });
     if (event.target.value.trim() !== 0) {
       setIsFirstNameValid(true);
+    } else {
+      setIsFirstNameValid(false);
     }
     checkFormValidation();
   };
@@ -51,6 +56,8 @@ export default function AddPerson() {
     });
     if (event.target.value.trim() !== 0) {
       setIsLastNameValid(true);
+    } else {
+      setIsLastNameValid(false);
     }
     checkFormValidation();
   };
@@ -61,6 +68,8 @@ export default function AddPerson() {
     });
     if (event.target.value.trim() !== 0 && event.target.value.includes("@")) {
       setIsEmailValid(true);
+    } else {
+      setIsEmailValid(false);
     }
     checkFormValidation();
   };
