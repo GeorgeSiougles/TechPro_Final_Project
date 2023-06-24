@@ -16,6 +16,14 @@ export default function AddOrder() {
 
   const [disableSubmit, setDisableSubmit] = useState(true);
 
+  let submitClassName = ``;
+
+  if (disableSubmit) {
+    submitClassName = `btn btn-danger`;
+  } else {
+    submitClassName = `btn btn-primary`;
+  }
+
   useEffect(() => {
     loadPeople();
     loadItems();
@@ -198,7 +206,7 @@ export default function AddOrder() {
       </div>
       <button
         type="submit"
-        className="btn btn-outline-primary"
+        className={submitClassName}
         disabled={disableSubmit}
       >
         Submit
@@ -208,6 +216,7 @@ export default function AddOrder() {
       </Link>
     </form>
   );
+
   return (
     <div className="container">
       {(people.length !== 0 || items.length !== 0) && formContent}

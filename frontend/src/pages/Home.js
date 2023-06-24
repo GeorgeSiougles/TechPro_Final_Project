@@ -60,7 +60,7 @@ export default function Home() {
   let peopleContent = (
     <div className="container">
       <div className="py-4">
-        <table className="table border shadow my-2">
+        <table className="table table-light border shadow my-2">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -87,7 +87,7 @@ export default function Home() {
                     View
                   </Link>
                   <Link
-                    className="btn btn-outline-primary mx-2"
+                    className="btn btn-info mx-2"
                     to={`/editperson/${person.personId}`}
                   >
                     Edit
@@ -110,11 +110,12 @@ export default function Home() {
   let itemsContent = (
     <div className="container">
       <div className="py-4">
-        <table className="table border shadow my-2">
+        <table className="table table-light border shadow my-2">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">Item Name</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -132,7 +133,7 @@ export default function Home() {
                     View
                   </Link>
                   <Link
-                    className="btn btn-outline-primary mx-2"
+                    className="btn btn-info mx-2"
                     to={`/editItem/${item.itemId}`}
                   >
                     Edit
@@ -155,7 +156,7 @@ export default function Home() {
   let ordersContent = (
     <div className="container">
       <div className="py-4">
-        <table className="table border shadow my-2">
+        <table className="table table-light border shadow my-2">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -163,6 +164,7 @@ export default function Home() {
               <th scope="col">Item</th>
               <th scope="col">Quantity</th>
               <th scope="col">Contact Email</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -183,7 +185,7 @@ export default function Home() {
                     View
                   </Link>
                   <Link
-                    className="btn btn-outline-primary mx-2"
+                    className="btn btn-info mx-2"
                     to={`/editOrder/${order.orderDetailsId}`}
                   >
                     Edit
