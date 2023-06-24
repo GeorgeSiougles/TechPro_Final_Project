@@ -8,6 +8,16 @@ export default function AddItem() {
     name: "",
   });
 
+  const [disableSubmit, setDisableSubmit] = useState(true);
+
+  let submitClassName = ``;
+
+  if (disableSubmit) {
+    submitClassName = `btn btn-danger`;
+  } else {
+    submitClassName = `btn btn-primary`;
+  }
+
   const { itemName } = item;
 
   const itemChangeHandler = (event) => {
@@ -15,6 +25,9 @@ export default function AddItem() {
       ...item,
       name: event.target.value,
     });
+    if (event.target.value.trim() !== 0) {
+      setDisableSubmit(false);
+    }
   };
 
   const submitHandler = async (event) => {
@@ -41,7 +54,11 @@ export default function AddItem() {
               onChange={itemChangeHandler}
             />
           </div>
-          <button type="submit" className="btn btn-outline-primary">
+          <button
+            type="submit"
+            className={submitClassName}
+            disabled={disableSubmit}
+          >
             Submit
           </button>
           <Link className="btn btn-outline-danger mx-2" to="/">

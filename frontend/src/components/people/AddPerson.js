@@ -10,25 +10,59 @@ export default function AddPerson() {
     email: "",
   });
 
+  const [isFirstNameValid, setIsFirstNameValid] = useState(false);
+  const [isLastNameValid, setIsLastNameValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+
+  const [disableSubmit, setDisableSubmit] = useState(true);
+
   const { firstName, lastName, email } = person;
+
+  let submitClassName = ``;
+
+  if (disableSubmit) {
+    submitClassName = `btn btn-danger`;
+  } else {
+    submitClassName = `btn btn-primary`;
+  }
+
+  const checkFormValidation = () => {
+    if (isFirstNameValid && isLastNameValid && isLastNameValid) {
+      setDisableSubmit(false);
+    } else {
+      setDisableSubmit(true);
+    }
+  };
 
   const firstNameChangeHandler = (event) => {
     setPerson({
       ...person,
       firstName: event.target.value,
     });
+    if (event.target.value.trim() !== 0) {
+      setIsFirstNameValid(true);
+    }
+    checkFormValidation();
   };
   const lastNameChangeHandler = (event) => {
     setPerson({
       ...person,
       lastName: event.target.value,
     });
+    if (event.target.value.trim() !== 0) {
+      setIsLastNameValid(true);
+    }
+    checkFormValidation();
   };
   const emailChangeHandler = (event) => {
     setPerson({
       ...person,
       email: event.target.value,
     });
+    if (event.target.value.trim() !== 0 && event.target.value.includes("@")) {
+      setIsEmailValid(true);
+    }
+    checkFormValidation();
   };
 
   const sumbitHandler = async (event) => {
@@ -82,7 +116,11 @@ export default function AddPerson() {
                 onChange={emailChangeHandler}
               />
             </div>
-            <button type="submit" className="btn btn-outline-primary">
+            <button
+              type="submit"
+              className={submitClassName}
+              disabled={disableSubmit}
+            >
               Submit
             </button>
             <Link className="btn btn-outline-danger mx-2" to="/">
