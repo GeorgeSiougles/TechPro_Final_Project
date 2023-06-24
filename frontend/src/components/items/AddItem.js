@@ -35,7 +35,7 @@ export default function AddItem() {
     try {
       const response = await axios.post("http://localhost:8090/saveItem", item);
       navigate("/");
-    } catch {
+    } catch (error) {
       console.log(error);
       console.log(error.message + ` while accessing /saveItem`);
       // window.alert(error.message + ` while accessing /item/${id}`);
