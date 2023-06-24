@@ -1,3 +1,12 @@
+# Tech Pro Academy final project
+
+## Prerequisites
+
+- Docker installed
+- Node.js and npm (Node Package Manager) installed
+- Java Development Kit (JDK) installed
+- Maven installed
+
 This repo uses docker to create a solution that connects a java backend with a mysql database and a react frontent.
 
 Each service is seperated in its own container respectively.
@@ -11,3 +20,5 @@ Executing stop.sh brings the containers down
 
 The swagger ui can be accessed at `{virtualmachineIP:8090/techpro-final.html}`
 or if the port 8090 has been forwarded :`http://localhost:8090/techpro-final.html`
+
+The frontend can be reached at port 3000.
