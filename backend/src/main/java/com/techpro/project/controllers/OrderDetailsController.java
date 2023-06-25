@@ -21,11 +21,17 @@ public class OrderDetailsController {
      *
      * @param orderDetails The OrderDetails object to be saved.
      * @return The saved OrderDetails object.
+     * @throws RuntimeException If an error occurs while saving the order details.
      */
     @PostMapping("/saveOrderDetails")
     OrderDetails saveOrderDetails(@RequestBody OrderDetails orderDetails) {
-        return orderDetailsRepository.save(orderDetails);
+        try {
+            return orderDetailsRepository.save(orderDetails);
+        } catch (Exception e) {
+            throw new RuntimeException("Something went wrong while saving the order details.", e);
+        }
     }
+
 
     /**
      * Retrieves a list of all order details.
@@ -67,20 +73,25 @@ public class OrderDetailsController {
     }
 
     /**
-     * Updates an order details by its ID.
+     * Update an order details.
      *
      * @param newOrderDetails The updated OrderDetails object.
-     * @param id              The ID of the order details to update.
+     * @param id              The ID of the order details to be updated.
      * @return The updated OrderDetails object.
-     * @throws OrderDetailsNotFoundException if the order details with the given ID is not found.
+     * @throws OrderDetailsNotFoundException If the order details with the specified ID is not found.
+     * @throws RuntimeException              If an error occurs while updating the order details.
      */
     @PutMapping("/orderDetails/{id}")
     OrderDetails updateOrderDetails(@RequestBody OrderDetails newOrderDetails, @PathVariable Integer id) {
-        return orderDetailsRepository.findById(id).map(details -> {
-            details.setItem(newOrderDetails.getItem());
-            details.setQuantity(newOrderDetails.getQuantity());
-            return orderDetailsRepository.save(details);
-        }).orElseThrow(() -> new OrderDetailsNotFoundException(id));
+        try {
+            return orderDetailsRepository.findById(id).map(details -> {
+                details.setItem(newOrderDetails.getItem());
+                details.setQuantity(newOrderDetails.getQuantity());
+                return orderDetailsRepository.save(details);
+            }).orElseThrow(() -> new OrderDetailsNotFoundException(id));
+        } catch (Exception e) {
+            throw new RuntimeException("Something went wrong while updating the order details.", e);
+        }
     }
 }
 

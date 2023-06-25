@@ -17,14 +17,19 @@ public class ItemController {
     private ItemRepository itemRepository;
 
     /**
-     * Saves an item.
+     * Save an item.
      *
      * @param item The Item object to be saved.
      * @return The saved Item object.
+     * @throws RuntimeException If an error occurs while saving the item.
      */
     @PostMapping("/saveItem")
     Item saveItem(@RequestBody Item item) {
-        return itemRepository.save(item);
+        try {
+            return itemRepository.save(item);
+        } catch (Exception e) {
+            throw new RuntimeException("Something went wrong while saving the item.", e);
+        }
     }
 
     /**
@@ -67,19 +72,24 @@ public class ItemController {
     }
 
     /**
-     * Updates an item by its ID.
+     * Update an item with the given ID.
      *
-     * @param newItem The updated Item object.
+     * @param newItem The updated item information.
      * @param id      The ID of the item to update.
-     * @return The updated Item object.
-     * @throws ItemNotFoundException if the item with the given ID is not found.
+     * @return The updated item.
+     * @throws ItemNotFoundException If the item with the specified ID is not found.
+     * @throws RuntimeException     If an error occurs while saving the item.
      */
     @PutMapping("/item/{id}")
     Item updateItem(@RequestBody Item newItem, @PathVariable Integer id) {
-        return itemRepository.findById(id).map(item -> {
-            item.setName(newItem.getName());
-            return itemRepository.save(item);
-        }).orElseThrow(() -> new ItemNotFoundException(id));
-    }
+        try {
+            return itemRepository.findById(id).map(item -> {
+                item.setName(newItem.getName());
+                return itemRepository.save(item);
+            }).orElseThrow(() -> new ItemNotFoundException(id));
+        } catch (Exception e) {
+            throw new RuntimeException("Something went wrong while saving the item.", e);
+        }
+}
 }
 

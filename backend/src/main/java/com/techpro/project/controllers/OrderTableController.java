@@ -29,11 +29,17 @@ public class OrderTableController {
      *
      * @param newOrder The OrderTable object to be saved.
      * @return The saved OrderTable object.
+     * @throws RuntimeException If an error occurs while saving the order table.
      */
     @PostMapping("/saveOrderTable")
     OrderTable saveOrderTable(@RequestBody OrderTable newOrder) {
-        return orderTableRepository.save(newOrder);
+        try {
+            return orderTableRepository.save(newOrder);
+        } catch (Exception e) {
+            throw new RuntimeException("Something went wrong while saving the order table.", e);
+        }
     }
+
 
     /**
      * Retrieves a list of all order tables.
@@ -80,15 +86,21 @@ public class OrderTableController {
      * @param newOrderTable The updated OrderTable object.
      * @param id            The ID of the order table to update.
      * @return The updated OrderTable object.
-     * @throws OrderTableNotFoundException if the order table with the given ID is not found.
+     * @throws OrderTableNotFoundException If the order table with the given ID is not found.
+     * @throws RuntimeException           If an error occurs while updating the order table.
      */
     @PutMapping("/orderTable/{id}")
     OrderTable updateOrderTable(@RequestBody OrderTable newOrderTable, @PathVariable Integer id) {
-        return orderTableRepository.findById(id).map(order -> {
-            order.setOrderDate(newOrderTable.getOrderDate());
-            return orderTableRepository.save(order);
-        }).orElseThrow(() -> new OrderTableNotFoundException(id));
+        try {
+            return orderTableRepository.findById(id).map(order -> {
+                order.setOrderDate(newOrderTable.getOrderDate());
+                return orderTableRepository.save(order);
+            }).orElseThrow(() -> new OrderTableNotFoundException(id));
+        } catch (Exception e) {
+            throw new RuntimeException("Something went wrong while updating the order table.", e);
+        }
     }
+
 
     /**
      * Retrieves the ID of the latest order table.

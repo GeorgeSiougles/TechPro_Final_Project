@@ -21,10 +21,16 @@ public class PersonController {
      *
      * @param newPerson The Person object to be created.
      * @return The created Person object.
+     * @throws RuntimeException if an error occurs while saving the person.
      */
     @PostMapping("/person")
     Person newPerson(@RequestBody Person newPerson) {
-        return personRepository.save(newPerson);
+        try {
+            return personRepository.save(newPerson);
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Something went wrong while saving the order table.", e);
+        }
     }
 
     /**
@@ -73,15 +79,21 @@ public class PersonController {
      * @param id        The ID of the person to update.
      * @return The updated Person object.
      * @throws PersonNotFoundException if the person with the given ID is not found.
+     * @throws RuntimeException       if an error occurs while updating the person.
      */
     @PutMapping("/person/{id}")
     Person updatePerson(@RequestBody Person newPerson, @PathVariable Integer id) {
+        try {
         return personRepository.findById(id).map(person -> {
             person.setFirstName(newPerson.getFirstName());
             person.setLastName(newPerson.getLastName());
             person.setEmail(newPerson.getEmail());
             return personRepository.save(person);
         }).orElseThrow(() -> new PersonNotFoundException(id));
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Something went wrong while saving the order table.", e);
+        }
     }
 
     /**
