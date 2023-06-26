@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 
 export default function AddPerson() {
@@ -138,9 +138,9 @@ export default function AddPerson() {
             >
               Submit
             </button>
-            <Link className="btn btn-outline-danger mx-2" to="/">
+            <NavLink className="btn btn-outline-danger mx-2" to="/">
               Cancel
-            </Link>
+            </NavLink>
           </form>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function AddItem() {
   let navigate = useNavigate();
@@ -67,9 +67,9 @@ export default function AddItem() {
           >
             Submit
           </button>
-          <Link className="btn btn-outline-danger mx-2" to="/">
+          <NavLink className="btn btn-outline-danger mx-2" to="/">
             Cancel
-          </Link>
+          </NavLink>
         </form>
       </div>
     </div>

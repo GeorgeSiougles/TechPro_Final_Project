@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 export default function ViewItem() {
   const [item, setItem] = useState({
@@ -39,9 +39,9 @@ export default function ViewItem() {
               </ul>
             </div>
           </div>
-          <Link className="btn btn-primary my-2" to={"/"}>
+          <NavLink className="btn btn-primary my-2" to={"/"}>
             Back to home
-          </Link>
+          </NavLink>
         </div>
       </div>
     </div>

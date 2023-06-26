@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function EditItem() {
@@ -69,9 +69,9 @@ export default function EditItem() {
             <button type="submit" className="btn btn-outline-primary">
               Submit
             </button>
-            <Link className="btn btn-outline-danger mx-2" to="/">
+            <NavLink className="btn btn-outline-danger mx-2" to="/">
               Cancel
-            </Link>
+            </NavLink>
           </form>
         </div>
       </div>

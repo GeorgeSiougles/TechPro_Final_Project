@@ -152,7 +152,9 @@ export default function Home() {
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Item Name</th>
+              <th scope="col" colSpan="3">
+                Item Name
+              </th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -162,7 +164,7 @@ export default function Home() {
                 <th scope="row" key={index}>
                   {index + 1}
                 </th>
-                <td>{item.name}</td>
+                <td colSpan="3">{item.name}</td>
                 <td>
                   <Link
                     className="btn btn-primary mx-2"

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function AddOrder() {
@@ -241,9 +241,9 @@ export default function AddOrder() {
       >
         Submit
       </button>
-      <Link className="btn btn-outline-danger mx-2" to="/">
+      <NavLink className="btn btn-outline-danger mx-2" to="/">
         Cancel
-      </Link>
+      </NavLink>
     </form>
   );
 
