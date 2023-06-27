@@ -6,7 +6,10 @@ export default function ActionGroup(props) {
   const deleteHandler = async (id) => {
     console.log(id);
     await ItemService.deleteItem(id);
-    window.location.reload();
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);
   };
 
   return (
