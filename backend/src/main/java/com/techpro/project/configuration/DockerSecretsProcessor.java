@@ -21,7 +21,7 @@ public class DockerSecretsProcessor implements EnvironmentPostProcessor {
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
         // Set system properties for MySQL host, username, and password
         System.setProperty("MYSQL_HOST", "db");
-        System.setProperty("MYSQL_USERNAME", "root");
-        System.setProperty("MYSQL_PASSWORD", "root");
+        System.setProperty("MYSQL_USERNAME",environment.getProperty("MYSQL_USERNAME"));
+        System.setProperty("MYSQL_PASSWORD", environment.getProperty("MYSQL_PASSWORD"));
     }
 }

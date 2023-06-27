@@ -27,7 +27,7 @@ export default function ViewItem() {
     <div className="container">
       <div className="row">
         <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
-          <h2 className="text-center m-4"> Person Dewtails</h2>
+          <h2 className="text-center m-4"> Person Details</h2>
           <div className="card">
             <div className="card-header">
               Details of Item {id}:

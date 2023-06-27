@@ -10,6 +10,8 @@ services:
     networks:
       - react-spring
       - spring-mysql
+    env_file:
+      - .env
 
   db:
     container_name: db
