@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Stop running containers
+docker compose down
+
 # Generate java executable code
 cd backend
 mvn clean install

@@ -12,6 +12,10 @@ This repo uses docker to create a solution that connects a java backend with a m
 Each service is seperated in its own container respectively.
 The provided scripts can help start and stop the containers after being given the appropriate permissions with `chmod +x filename.sh`.
 
+The script go.sh also brings the containers down and rebuilds the project.
+
+The script stop.sh only brings the containers down.
+
 Both scripts can be started by typing the command `go.sh` and `./stop.sh`
 
 Executing go.sh rebuilds the code, rebuilds and starts the containers and prunes unused docker resources.
