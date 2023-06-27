@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import ItemService from "../service/ItemService";
+import Items from "../components/Card/Items";
 
 export default function Home() {
   const [people, setPeople] = useState([]);
@@ -46,27 +48,33 @@ export default function Home() {
   };
 
   const loadItems = async () => {
-    try {
-      const result = await axios.get("http://localhost:8090/getAllItems");
-      setItems(result.data);
-      setNumItems(items.length);
-      setAreItemsLoaded(numItems !== 0);
-    } catch (error) {
-      console.log(error);
-      console.log(error.message + ` while accessing /getAllItems`);
-      // window.alert(error.message + ` while accessing /getAllItems`);
-    }
+    setItems(await ItemService.loadAllItems());
+    setNumItems(items.length);
+    setAreItemsLoaded(items.length !== 0);
+    // try {
+    //   const result = await axios.get("http://localhost:8090/getAllItems");
+    //   setItems(result.data);
+    //   setNumItems(items.length);
+    //   setAreItemsLoaded(numItems !== 0);
+    // } catch (error) {
+
+    //   console.log(error);
+    //   console.log(error.message + ` while accessing /getAllItems`);
+    //   // window.alert(error.message + ` while accessing /getAllItems`);
+    // }
   };
 
   const deleteItem = async (id) => {
-    try {
-      await axios.delete(`http://localhost:8090/item/${id}`);
-      loadItems();
-    } catch (error) {
-      console.log(error);
-      console.log(error.message + ` while accessing /item/${id}`);
-      // window.alert(error.message + ` while accessing /item/${id}`);
-    }
+    await ItemService.deleteItem(id);
+    loadItems();
+    // try {
+    //   await axios.delete(`http://localhost:8090/item/${id}`);
+    //   loadItems();
+    // } catch (error) {
+    //   console.log(error);
+    //   console.log(error.message + ` while accessing /item/${id}`);
+    //   // window.alert(error.message + ` while accessing /item/${id}`);
+    // }
   };
 
   const loadOrders = async () => {
@@ -145,51 +153,51 @@ export default function Home() {
     </div>
   );
 
-  let itemsContent = (
-    <div className="container">
-      <div className="py-4">
-        <table className="table table-light border shadow my-2">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Item Name</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => (
-              <tr>
-                <th scope="row" key={index}>
-                  {index + 1}
-                </th>
-                <td>{item.name}</td>
-                <td>
-                  <Link
-                    className="btn btn-primary mx-2"
-                    to={`/viewItem/${item.itemId}`}
-                  >
-                    View
-                  </Link>
-                  <Link
-                    className="btn btn-info mx-2"
-                    to={`/editItem/${item.itemId}`}
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    className="btn btn-danger mx-2"
-                    onClick={() => deleteItem(item.itemId)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+  // let itemsContent = (
+  //   <div className="container">
+  //     <div className="py-4">
+  //       <table className="table table-light border shadow my-2">
+  //         <thead>
+  //           <tr>
+  //             <th scope="col">#</th>
+  //             <th scope="col">Item Name</th>
+  //             <th scope="col">Action</th>
+  //           </tr>
+  //         </thead>
+  //         <tbody>
+  //           {items.map((item, index) => (
+  //             <tr>
+  //               <th scope="row" key={index}>
+  //                 {index + 1}
+  //               </th>
+  //               <td>{item.name}</td>
+  //               <td>
+  //                 <Link
+  //                   className="btn btn-primary mx-2"
+  //                   to={`/viewItem/${item.itemId}`}
+  //                 >
+  //                   View
+  //                 </Link>
+  //                 <Link
+  //                   className="btn btn-info mx-2"
+  //                   to={`/editItem/${item.itemId}`}
+  //                 >
+  //                   Edit
+  //                 </Link>
+  //                 <button
+  //                   className="btn btn-danger mx-2"
+  //                   onClick={() => deleteItem(item.itemId)}
+  //                 >
+  //                   Delete
+  //                 </button>
+  //               </td>
+  //             </tr>
+  //           ))}
+  //         </tbody>
+  //       </table>
+  //     </div>
+  //   </div>
+  // );
 
   let ordersContent = (
     <div className="container">
@@ -211,7 +219,7 @@ export default function Home() {
                 <th scope="row" key={index}>
                   {index + 1}
                 </th>
-                <td>{order.orderTable.orderDate.slice(0, 9)}</td>
+                <td>{order.orderTable.orderDate.slice(0, 10)}</td>
                 <td>{order.item.name}</td>
                 <td>{order.quantity}</td>
                 <td>{order.orderTable.person.email}</td>
@@ -248,7 +256,7 @@ export default function Home() {
       <div className="container">
         <div className="py-4">
           {numPeople === 0 ? <p>No people to show.</p> : peopleContent}
-          {numItems === 0 ? <p>No items to show.</p> : itemsContent}
+          {numItems === 0 ? <p>No items to show.</p> : <Items items={items} />}
           {numOrders === 0 ? <p>No orders to show.</p> : ordersContent}
         </div>
       </div>
