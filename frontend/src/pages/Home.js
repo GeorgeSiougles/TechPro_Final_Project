@@ -255,9 +255,13 @@ export default function Home() {
     <>
       <div className="container">
         <div className="py-4">
-          {numPeople === 0 ? <p>No people to show.</p> : peopleContent}
-          {numItems === 0 ? <p>No items to show.</p> : <Items items={items} />}
-          {numOrders === 0 ? <p>No orders to show.</p> : ordersContent}
+          {arePeopleLoaded === 0 ? <p>No people to show.</p> : peopleContent}
+          {areItemsLoaded === 0 ? (
+            <p>No items to show.</p>
+          ) : (
+            <Items items={items} />
+          )}
+          {areOrdersLoaded === 0 ? <p>No orders to show.</p> : ordersContent}
         </div>
       </div>
     </>
