@@ -3,7 +3,7 @@
 |_    _|     ||   ___||   ___||  |_| | |     |     ||     | /     \ 
  |    |      ||   ___||   |__ |   _  | |    _|     ||     \ |     | 
  |____|    __||______||______||__| |_| |___|     __||__|\__\\_____/ 
-
+     |____|                                |____|-
                                                                                                                                                                               
 ${application.title} ${application.version}
 Powered by Spring Boot ${spring-boot.version}

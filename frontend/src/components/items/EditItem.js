@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function EditItem() {
@@ -24,13 +24,28 @@ export default function EditItem() {
 
   const sumbitHandler = async (event) => {
     event.preventDefault();
-    const response = await axios.put(`http://localhost:8090/item/${id}`, item);
-    navigate("/");
+    try {
+      const response = await axios.put(
+        `http://localhost:8090/item/${id}`,
+        item
+      );
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /item/${id}`);
+      // window.alert(error.message + ` while accessing /item/${id}`);
+    }
   };
 
   const loadItem = async () => {
-    const result = await axios.get(`http://localhost:8090/item/${id}`);
-    setItem(result.data);
+    try {
+      const result = await axios.get(`http://localhost:8090/item/${id}`);
+      setItem(result.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /item/${id}`);
+      // window.alert(error.message + ` while accessing /item/${id}`);
+    }
   };
   return (
     <div className="container">
@@ -54,9 +69,9 @@ export default function EditItem() {
             <button type="submit" className="btn btn-outline-primary">
               Submit
             </button>
-            <Link className="btn btn-outline-danger mx-2" to="/">
+            <NavLink className="btn btn-outline-danger mx-2" to="/">
               Cancel
-            </Link>
+            </NavLink>
           </form>
         </div>
       </div>

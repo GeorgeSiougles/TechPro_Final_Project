@@ -15,6 +15,7 @@ com/techpro/project/exception/OrderTableNotFoundException.class
 com/techpro/project/exception/ItemNotFoundAdvice.class
 com/techpro/project/controllers/OrderTableController.class
 com/techpro/project/exception/OrderDetailsNotFoundAdvice.class
+com/techpro/project/service/OrderTableService.class
 com/techpro/project/controllers/ItemController.class
 com/techpro/project/entity/OrderTable.class
 com/techpro/project/entity/Person.class

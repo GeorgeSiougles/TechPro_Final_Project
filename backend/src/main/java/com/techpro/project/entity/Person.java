@@ -15,25 +15,42 @@ import javax.persistence.GenerationType;
 
 @Getter
 @Setter
+/**
+ * The Person class represents a person in the application.
+ * It contains information such as the person ID, first name, last name, and email.
+ */
+@Entity
+@Table(name = "person")
 @Data
 @Transactional
-
-@Table(name = "person")
-@Entity
 public class Person {
 
+    /**
+     * The unique identifier of the person.
+     */
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "personId")
     private int personId;
 
+    /**
+     * The first name of the person.
+     */
     @Column(name = "firstName")
     private String firstName;
 
-    @Column(name = "lastName" )
+    /**
+     * The last name of the person.
+     */
+    @Column(name = "lastName")
     private String lastName;
 
-    @Column(name = "email" )
+    /**
+     * The email address of the person.
+     */
+    @Column(name = "email")
     private String email;
+
+    // Getters and Setters are generated using Lombok's annotations
 
 }

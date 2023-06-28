@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 export default function ViewPerson() {
   const [person, setPerson] = useState({
@@ -16,8 +16,14 @@ export default function ViewPerson() {
   }, []);
 
   const loadPerson = async () => {
-    const result = await axios.get(`http://localhost:8090/person/${id}`);
-    setPerson(result.data);
+    try {
+      const result = await axios.get(`http://localhost:8090/person/${id}`);
+      setPerson(result.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /person/${id}`);
+      // window.alert(error.message + ` while accessing /person/${id}`);
+    }
   };
   return (
     <div className="container">
@@ -43,9 +49,9 @@ export default function ViewPerson() {
               </ul>
             </div>
           </div>
-          <Link className="btn btn-primary my-2" to={"/"}>
+          <NavLink className="btn btn-primary my-2" to={"/"}>
             Back to home
-          </Link>
+          </NavLink>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function EditPerson() {
@@ -38,16 +38,28 @@ export default function EditPerson() {
 
   const sumbitHandler = async (event) => {
     event.preventDefault();
-    const response = await axios.put(
-      `http://localhost:8090/person/${id}`,
-      person
-    );
-    navigate("/");
+    try {
+      const response = await axios.put(
+        `http://localhost:8090/person/${id}`,
+        person
+      );
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /person/${id}`);
+      // window.alert(error.message + ` while accessing /person/${id}`);
+    }
   };
 
   const loadPerson = async () => {
-    const result = await axios.get(`http://localhost:8090/person/${id}`);
-    setPerson(result.data);
+    try {
+      const result = await axios.get(`http://localhost:8090/person/${id}`);
+      setPerson(result.data);
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /person/${id}`);
+      // window.alert(error.message + ` while accessing /person/${id}`);
+    }
   };
 
   return (
@@ -87,7 +99,7 @@ export default function EditPerson() {
                 Email
               </label>
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 placeholder="Enter email"
                 name="Email"
@@ -98,9 +110,9 @@ export default function EditPerson() {
             <button type="submit" className="btn btn-outline-primary">
               Submit
             </button>
-            <Link className="btn btn-outline-danger mx-2" to="/">
+            <NavLink className="btn btn-outline-danger mx-2" to="/">
               Cancel
-            </Link>
+            </NavLink>
           </form>
         </div>
       </div>

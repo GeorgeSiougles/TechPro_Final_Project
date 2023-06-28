@@ -1,18 +1,12 @@
 package com.techpro.project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.techpro.project.entity.OrderTable;
 import com.techpro.project.exception.OrderTableNotFoundException;
 import com.techpro.project.repository.OrderTableRepository;
+import com.techpro.project.service.OrderTableService;
 
 import java.util.List;
 
@@ -20,37 +14,103 @@ import java.util.List;
 @RestController
 public class OrderTableController {
 
-     @Autowired
-     private OrderTableRepository orderTableRepository;
+    private final OrderTableService orderTableService;
 
-     @PostMapping("/saveOrderTable")
-     OrderTable saveOrderTable(@RequestBody OrderTable newOrder ) {
-        return orderTableRepository.save(newOrder);
-     }
+    @Autowired
+    public OrderTableController(OrderTableService orderTableService) {
+        this.orderTableService = orderTableService;
+    }
 
-     @GetMapping("/getAllOrders")
-     List<OrderTable> getAllOrders(){
+    @Autowired
+    private OrderTableRepository orderTableRepository;
+
+    /**
+     * Saves an order table.
+     *
+     * @param newOrder The OrderTable object to be saved.
+     * @return The saved OrderTable object.
+     * @throws RuntimeException If an error occurs while saving the order table.
+     */
+    @PostMapping("/saveOrderTable")
+    OrderTable saveOrderTable(@RequestBody OrderTable newOrder) {
+        try {
+            return orderTableRepository.save(newOrder);
+        } catch (Exception e) {
+            throw new RuntimeException("Something went wrong while saving the order table.", e);
+        }
+    }
+
+
+    /**
+     * Retrieves a list of all order tables.
+     *
+     * @return A list of all order tables.
+     */
+    @GetMapping("/getAllOrders")
+    List<OrderTable> getAllOrders() {
         return orderTableRepository.findAll();
-     }
-
-     @GetMapping("/orderTable/{id}")
-    OrderTable getOrderDetailsById(@PathVariable Integer id){
-        return orderTableRepository.findById(id).orElseThrow(()-> new OrderTableNotFoundException(id));
     }
+
+    /**
+     * Retrieves an order table by its ID.
+     *
+     * @param id The ID of the order table to retrieve.
+     * @return The retrieved OrderTable object.
+     * @throws OrderTableNotFoundException if the order table with the given ID is not found.
+     */
+    @GetMapping("/orderTable/{id}")
+    OrderTable getOrderDetailsById(@PathVariable Integer id) {
+        return orderTableRepository.findById(id)
+                .orElseThrow(() -> new OrderTableNotFoundException(id));
+    }
+
+    /**
+     * Deletes an order table by its ID.
+     *
+     * @param id The ID of the order table to delete.
+     * @return A success message if the order table is deleted successfully.
+     * @throws OrderTableNotFoundException if the order table with the given ID is not found.
+     */
     @DeleteMapping("/orderTable/{id}")
-    String deleteOrderTable(@PathVariable Integer id){
-      if(!orderTableRepository.existsById(id)){
-         throw new OrderTableNotFoundException(id);
-      }
-      orderTableRepository.deleteById(id);
-      return "OrderTable with id: " + id + " has been deleted successfully";
+    String deleteOrderTable(@PathVariable Integer id) {
+        if (!orderTableRepository.existsById(id)) {
+            throw new OrderTableNotFoundException(id);
+        }
+        orderTableRepository.deleteById(id);
+        return "OrderTable with ID " + id + " has been deleted successfully";
     }
 
-   @PutMapping("/orderTable/{id}")
-   OrderTable updateOrderTable(@RequestBody OrderTable newOrderTable,@PathVariable Integer id){
-      return orderTableRepository.findById(id).map(order -> {
-         order.setOrderDate(newOrderTable.getOrderDate());
-         return orderTableRepository.save(order);
-      }).orElseThrow(()->new OrderTableNotFoundException(id));
-   }
+    /**
+     * Updates an order table by its ID.
+     *
+     * @param newOrderTable The updated OrderTable object.
+     * @param id            The ID of the order table to update.
+     * @return The updated OrderTable object.
+     * @throws OrderTableNotFoundException If the order table with the given ID is not found.
+     * @throws RuntimeException           If an error occurs while updating the order table.
+     */
+    @PutMapping("/orderTable/{id}")
+    OrderTable updateOrderTable(@RequestBody OrderTable newOrderTable, @PathVariable Integer id) {
+        try {
+            return orderTableRepository.findById(id).map(order -> {
+                order.setOrderDate(newOrderTable.getOrderDate());
+                return orderTableRepository.save(order);
+            }).orElseThrow(() -> new OrderTableNotFoundException(id));
+        } catch (Exception e) {
+            throw new RuntimeException("Something went wrong while updating the order table.", e);
+        }
+    }
+
+
+    /**
+     * Retrieves the ID of the latest order table.
+     *
+     * @return The ID of the latest order table.
+     */
+    @GetMapping("/latestOrderId")
+    public int getLatestOrderTableId() {
+        return orderTableService.getLatestOrderTableId();
+    }
+
 }
+

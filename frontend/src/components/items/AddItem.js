@@ -1,12 +1,22 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 export default function AddItem() {
   let navigate = useNavigate();
   const [item, setItem] = useState({
     name: "",
   });
+
+  const [disableSubmit, setDisableSubmit] = useState(true);
+
+  let submitClassName = ``;
+
+  if (disableSubmit) {
+    submitClassName = `btn btn-danger`;
+  } else {
+    submitClassName = `btn btn-primary`;
+  }
 
   const { itemName } = item;
 
@@ -15,12 +25,21 @@ export default function AddItem() {
       ...item,
       name: event.target.value,
     });
+    if (event.target.value.trim() !== 0) {
+      setDisableSubmit(false);
+    }
   };
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    const response = await axios.post("http://localhost:8090/saveItem", item);
-    navigate("/");
+    try {
+      const response = await axios.post("http://localhost:8090/saveItem", item);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      console.log(error.message + ` while accessing /saveItem`);
+      // window.alert(error.message + ` while accessing /item/${id}`);
+    }
   };
 
   return (
@@ -35,18 +54,22 @@ export default function AddItem() {
             <input
               type="text"
               className="form-control"
-              placeholder="Enter first name"
+              placeholder="Enter item name"
               name="ItemName"
               value={itemName}
               onChange={itemChangeHandler}
             />
           </div>
-          <button type="submit" className="btn btn-outline-primary">
+          <button
+            type="submit"
+            className={submitClassName}
+            disabled={disableSubmit}
+          >
             Submit
           </button>
-          <Link className="btn btn-outline-danger mx-2" to="/">
+          <NavLink className="btn btn-outline-danger mx-2" to="/">
             Cancel
-          </Link>
+          </NavLink>
         </form>
       </div>
     </div>

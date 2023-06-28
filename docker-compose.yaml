@@ -1,28 +1,35 @@
-services:
+version: "3"
 
+services:
   backend:
+    container_name: backend
     build: backend
     restart: always
     ports:
-     - "8090:8080"
+      - "8090:8080"
     networks:
       - react-spring
       - spring-mysql
-  
+    env_file:
+      - .env
+
   db:
+    container_name: db
     image: mysql:latest
     environment:
       - MYSQL_DATABASE=final_project
       - MYSQL_ROOT_PASSWORD=root
     restart: always
     ports:
-      - '3306:3306'
+      - "3306:3306"
     volumes:
       - ./db/final_project_db.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - spring-mysql
 
   frontend:
+    container_name: frontend
+    restart: always
     build:
       context: frontend
       target: development

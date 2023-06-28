@@ -18,5 +18,6 @@
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/entity/OrderTable.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/controllers/OrderTableController.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/exception/ItemNotFoundException.java
+/home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/service/OrderTableService.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/configuration/DockerSecretsProcessor.java
 /home/user/TechPro_Final_Project/backend/src/main/java/com/techpro/project/exception/OrderDetailsNotFoundAdvice.java
