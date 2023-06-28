@@ -3,6 +3,8 @@ package com.techpro.project.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.techpro.project.entity.Person;
@@ -15,21 +17,21 @@ public class PersonController {
 
     @Autowired
     private PersonRepository personRepository;
-
+    
     /**
-     * Creates a new person.
+     * Create a new person.
      *
-     * @param newPerson The Person object to be created.
-     * @return The created Person object.
-     * @throws RuntimeException if an error occurs while saving the person.
+     * @param newPerson The person object to be created.
+     * @return ResponseEntity<Person> The response entity containing the saved person object and HTTP status code.
+     * @throws RuntimeException If an exception occurs while saving the person.
      */
     @PostMapping("/person")
-    Person newPerson(@RequestBody Person newPerson) {
+    public ResponseEntity<Person> newPerson(@RequestBody Person newPerson) {
         try {
-            return personRepository.save(newPerson);
+            return ResponseEntity.status(HttpStatus.CREATED).body(personRepository.save(newPerson));
         }
         catch (Exception e) {
-            throw new RuntimeException("Something went wrong while saving the order table.", e);
+            throw new RuntimeException("Something went wrong while saving the person table.", e);
         }
     }
 
@@ -39,7 +41,7 @@ public class PersonController {
      * @return A list of all people.
      */
     @GetMapping("/allPeople")
-    List<Person> getAllPeople() {
+    public List<Person> getAllPeople() {
         return personRepository.findAll();
     }
 
@@ -51,7 +53,7 @@ public class PersonController {
      * @throws PersonNotFoundException if the person with the given ID is not found.
      */
     @GetMapping("/person/{id}")
-    Person getPersonById(@PathVariable Integer id) {
+    public Person getPersonById(@PathVariable Integer id) {
         return personRepository.findById(id)
                 .orElseThrow(() -> new PersonNotFoundException(id));
     }
@@ -64,7 +66,7 @@ public class PersonController {
      * @throws PersonNotFoundException if the person with the given ID is not found.
      */
     @DeleteMapping("/person/{id}")
-    String deletePerson(@PathVariable Integer id) {
+    public String deletePerson(@PathVariable Integer id) {
         if (!personRepository.existsById(id)) {
             throw new PersonNotFoundException(id);
         }
@@ -82,7 +84,7 @@ public class PersonController {
      * @throws RuntimeException       if an error occurs while updating the person.
      */
     @PutMapping("/person/{id}")
-    Person updatePerson(@RequestBody Person newPerson, @PathVariable Integer id) {
+    public Person updatePerson(@RequestBody Person newPerson, @PathVariable Integer id) {
         try {
         return personRepository.findById(id).map(person -> {
             person.setFirstName(newPerson.getFirstName());

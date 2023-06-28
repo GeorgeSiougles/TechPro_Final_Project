@@ -1,6 +1,8 @@
 package com.techpro.project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.techpro.project.entity.Item;
@@ -19,14 +21,14 @@ public class ItemController {
     /**
      * Save an item.
      *
-     * @param item The Item object to be saved.
-     * @return The saved Item object.
-     * @throws RuntimeException If an error occurs while saving the item.
+     * @param item The item object to be saved.
+     * @return ResponseEntity<Item> The response entity containing the saved item object and HTTP status code.
+     * @throws RuntimeException If an exception occurs while saving the item.
      */
     @PostMapping("/saveItem")
-    Item saveItem(@RequestBody Item item) {
+    public ResponseEntity<Item> saveItem(@RequestBody Item item) {
         try {
-            return itemRepository.save(item);
+            return ResponseEntity.status(HttpStatus.CREATED).body(itemRepository.save(item));
         } catch (Exception e) {
             throw new RuntimeException("Something went wrong while saving the item.", e);
         }
@@ -38,7 +40,7 @@ public class ItemController {
      * @return A list of all items.
      */
     @GetMapping("/getAllItems")
-    List<Item> getAllItems() {
+    public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
 
@@ -50,7 +52,7 @@ public class ItemController {
      * @throws ItemNotFoundException if the item with the given ID is not found.
      */
     @GetMapping("/item/{id}")
-    Item getItemById(@PathVariable Integer id) {
+    public Item getItemById(@PathVariable Integer id) {
         return itemRepository.findById(id)
                 .orElseThrow(() -> new ItemNotFoundException(id));
     }
@@ -63,7 +65,7 @@ public class ItemController {
      * @throws ItemNotFoundException if the item with the given ID is not found.
      */
     @DeleteMapping("/item/{id}")
-    String deleteItem(@PathVariable Integer id) {
+    public String deleteItem(@PathVariable Integer id) {
         if (!itemRepository.existsById(id)) {
             throw new ItemNotFoundException(id);
         }
@@ -81,7 +83,7 @@ public class ItemController {
      * @throws RuntimeException     If an error occurs while saving the item.
      */
     @PutMapping("/item/{id}")
-    Item updateItem(@RequestBody Item newItem, @PathVariable Integer id) {
+    public Item updateItem(@RequestBody Item newItem, @PathVariable Integer id) {
         try {
             return itemRepository.findById(id).map(item -> {
                 item.setName(newItem.getName());

@@ -1,6 +1,8 @@
 package com.techpro.project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.techpro.project.entity.OrderDetails;
@@ -17,16 +19,16 @@ public class OrderDetailsController {
     private OrderDetailsRepository orderDetailsRepository;
 
     /**
-     * Saves an order details.
+     * Save order details.
      *
-     * @param orderDetails The OrderDetails object to be saved.
-     * @return The saved OrderDetails object.
-     * @throws RuntimeException If an error occurs while saving the order details.
+     * @param orderDetails The order details object to be saved.
+     * @return ResponseEntity<OrderDetails> The response entity containing the saved order details object and HTTP status code.
+     * @throws RuntimeException If an exception occurs while saving the order details.
      */
     @PostMapping("/saveOrderDetails")
-    OrderDetails saveOrderDetails(@RequestBody OrderDetails orderDetails) {
+    public ResponseEntity<OrderDetails> saveOrderDetails(@RequestBody OrderDetails orderDetails) {
         try {
-            return orderDetailsRepository.save(orderDetails);
+            return ResponseEntity.status(HttpStatus.CREATED).body(orderDetailsRepository.save(orderDetails));
         } catch (Exception e) {
             throw new RuntimeException("Something went wrong while saving the order details.", e);
         }
@@ -39,7 +41,7 @@ public class OrderDetailsController {
      * @return A list of all order details.
      */
     @GetMapping("/getAllOrderDetails")
-    List<OrderDetails> getAllOrderDetails() {
+    public List<OrderDetails> getAllOrderDetails() {
         return orderDetailsRepository.findAll();
     }
 
@@ -51,7 +53,7 @@ public class OrderDetailsController {
      * @throws OrderDetailsNotFoundException if the order details with the given ID is not found.
      */
     @GetMapping("/orderDetails/{id}")
-    OrderDetails getOrderDetailsById(@PathVariable Integer id) {
+    public OrderDetails getOrderDetailsById(@PathVariable Integer id) {
         return orderDetailsRepository.findById(id)
                 .orElseThrow(() -> new OrderDetailsNotFoundException(id));
     }
@@ -64,7 +66,7 @@ public class OrderDetailsController {
      * @throws OrderDetailsNotFoundException if the order details with the given ID is not found.
      */
     @DeleteMapping("/orderDetails/{id}")
-    String deleteOrderDetails(@PathVariable Integer id) {
+    public String deleteOrderDetails(@PathVariable Integer id) {
         if (!orderDetailsRepository.existsById(id)) {
             throw new OrderDetailsNotFoundException(id);
         }
@@ -82,7 +84,7 @@ public class OrderDetailsController {
      * @throws RuntimeException              If an error occurs while updating the order details.
      */
     @PutMapping("/orderDetails/{id}")
-    OrderDetails updateOrderDetails(@RequestBody OrderDetails newOrderDetails, @PathVariable Integer id) {
+    public OrderDetails updateOrderDetails(@RequestBody OrderDetails newOrderDetails, @PathVariable Integer id) {
         try {
             return orderDetailsRepository.findById(id).map(details -> {
                 details.setItem(newOrderDetails.getItem());

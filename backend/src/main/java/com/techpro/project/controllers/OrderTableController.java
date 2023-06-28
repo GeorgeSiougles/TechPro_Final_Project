@@ -1,6 +1,8 @@
 package com.techpro.project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.techpro.project.entity.OrderTable;
@@ -23,18 +25,18 @@ public class OrderTableController {
 
     @Autowired
     private OrderTableRepository orderTableRepository;
-
+    
     /**
-     * Saves an order table.
+     * Save an order table.
      *
-     * @param newOrder The OrderTable object to be saved.
-     * @return The saved OrderTable object.
-     * @throws RuntimeException If an error occurs while saving the order table.
+     * @param newOrder The order table object to be saved.
+     * @return ResponseEntity<OrderTable> The response entity containing the saved order table object and HTTP status code.
+     * @throws RuntimeException If an exception occurs while saving the order table.
      */
     @PostMapping("/saveOrderTable")
-    OrderTable saveOrderTable(@RequestBody OrderTable newOrder) {
+    public ResponseEntity<OrderTable> saveOrderTable(@RequestBody OrderTable newOrder) {
         try {
-            return orderTableRepository.save(newOrder);
+            return ResponseEntity.status(HttpStatus.CREATED).body(orderTableRepository.save(newOrder));
         } catch (Exception e) {
             throw new RuntimeException("Something went wrong while saving the order table.", e);
         }
@@ -47,7 +49,7 @@ public class OrderTableController {
      * @return A list of all order tables.
      */
     @GetMapping("/getAllOrders")
-    List<OrderTable> getAllOrders() {
+    public List<OrderTable> getAllOrders() {
         return orderTableRepository.findAll();
     }
 
@@ -59,7 +61,7 @@ public class OrderTableController {
      * @throws OrderTableNotFoundException if the order table with the given ID is not found.
      */
     @GetMapping("/orderTable/{id}")
-    OrderTable getOrderDetailsById(@PathVariable Integer id) {
+    public OrderTable getOrderDetailsById(@PathVariable Integer id) {
         return orderTableRepository.findById(id)
                 .orElseThrow(() -> new OrderTableNotFoundException(id));
     }
@@ -72,7 +74,7 @@ public class OrderTableController {
      * @throws OrderTableNotFoundException if the order table with the given ID is not found.
      */
     @DeleteMapping("/orderTable/{id}")
-    String deleteOrderTable(@PathVariable Integer id) {
+    public String deleteOrderTable(@PathVariable Integer id) {
         if (!orderTableRepository.existsById(id)) {
             throw new OrderTableNotFoundException(id);
         }
@@ -90,7 +92,7 @@ public class OrderTableController {
      * @throws RuntimeException           If an error occurs while updating the order table.
      */
     @PutMapping("/orderTable/{id}")
-    OrderTable updateOrderTable(@RequestBody OrderTable newOrderTable, @PathVariable Integer id) {
+    public OrderTable updateOrderTable(@RequestBody OrderTable newOrderTable, @PathVariable Integer id) {
         try {
             return orderTableRepository.findById(id).map(order -> {
                 order.setOrderDate(newOrderTable.getOrderDate());
