@@ -5,7 +5,6 @@ class ItemService {
   async loadAllItems() {
     try {
       const result = await axios.get(host + "getAllItems");
-      console.log("Result: " + result.data);
       return result.data;
     } catch (error) {
       console.log(error);
@@ -19,8 +18,8 @@ class ItemService {
       await axios.delete(host + `item/${id}`);
     } catch (error) {
       console.log(error);
-      console.log(error.message + ` while accessing /item/${id}`);
-      // window.alert(error.message + ` while accessing /item/${id}`);
+      console.log(error.message + ` while deleting /item/${id}`);
+      window.alert(error.message + ` while deleting /item/${id}`);
     }
   }
 }
